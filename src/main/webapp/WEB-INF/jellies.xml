@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jellies>
+    <jelly>
+        <id>1</id>
+        <flavor>Strawberry</flavor>
+        <quantity>5</quantity>
+    </jelly>
+    <jelly>
+        <id>2</id>
+        <flavor>Blueberry</flavor>
+        <quantity>10</quantity>
+    </jelly>
+    <jelly>
+        <id>3</id>
+        <flavor>Raspberry</flavor>
+        <quantity>7</quantity>
+    </jelly>
+</jellies>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jelly Data Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        canvas {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+<canvas id="jellyChart"></canvas>
+
+<ul id="jellyList"></ul>
+
+<script>
+    fetch('jellies.xml')
+        .then(response => response.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(data, 'application/xml');
+
+            const jellyNodes = xmlDoc.getElementsByTagName('jelly');
+            const jellyList = document.getElementById('jellyList');
+
+            for (let i = 0; i < jellyNodes.length; i++) {
+                const id = jellyNodes[i].getElementsByTagName('id')[0].textContent;
+                const flavor = jellyNodes[i].getElementsByTagName('flavor')[0].textContent;
+                const quantity = jellyNodes[i].getElementsByTagName('quantity')[0].textContent;
+
+                const listItem = document.createElement('li');
+                listItem.textContent = `Jelly ${id}: Flavor - ${flavor}, Quantity - ${quantity}`;
+                jellyList.appendChild(listItem);
+            }
+        });
+</script>
+
+<script>
+    fetch("jellies.xml")
+        .then(response => response.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(data, 'application/xml');
+
+            const jellyNodes = xmlDoc.getElementsByTagName('jelly');
+            const flavors = [];
+            const quantities = [];
+
+            for (let i = 0; i < jellyNodes.length; i++) {
+                const flavor = jellyNodes[i].getElementsByTagName('flavor')[0].textContent;
+                const quantity = parseInt(jellyNodes[i].getElementsByTagName('quantity')[0].textContent);
+
+                flavors.push(flavor);
+                quantities.push(quantity);
+            }
+
+            const ctx = document.getElementById('jellyChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: flavors,
+                    datasets: [{
+                        label: 'Jelly Quantities',
+                        data: quantities,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+</script>
+</body>
+</html>
